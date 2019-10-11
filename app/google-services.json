@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "246196210493",
+    "firebase_url": "https://automation-schedular-cb713.firebaseio.com",
+    "project_id": "automation-schedular-cb713",
+    "storage_bucket": "automation-schedular-cb713.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246196210493:android:068f60aac06855f7b55354",
+        "android_client_info": {
+          "package_name": "com.aaars.b"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246196210493-4nrnvoopk9qm3buh6p37tek31prccn5d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aaars.b",
+            "certificate_hash": "fbcec8d0f1c383cf9f76c13ef8b4e70a0a2466f2"
+          }
+        },
+        {
+          "client_id": "246196210493-14q6h7u5i156sccl75nkrqvtfa2j20gd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdx0DSDlwby3re321cXnek8CGPImC34Jg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246196210493-14q6h7u5i156sccl75nkrqvtfa2j20gd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
