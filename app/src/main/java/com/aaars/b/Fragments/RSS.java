@@ -106,6 +106,7 @@ public class RSS extends Fragment {
                     String emailid = input.getText().toString();
                     if (emailid.contains("@") && emailid.contains(".") && emailid.length() > 10) {
                         md.parameters.set(0,emailid);
+                        md.parameters.set(1,rss.getText().toString());
                         dr.setValue(md);
                         input.setEnabled(false);
                         rss.setEnabled(false);

@@ -3,29 +3,18 @@ package com.aaars.b;
 import android.Manifest;
 import android.animation.ArgbEvaluator;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -38,14 +27,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Onboarding extends AppCompatActivity {
 
@@ -111,7 +94,7 @@ public class Onboarding extends AppCompatActivity {
     }
 
     private void googleSignIn() {
-        rootIntent = new Intent(this, Root.class);
+        //rootIntent = new Intent(this, Root.class);
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if(account != null) {
@@ -124,9 +107,10 @@ public class Onboarding extends AppCompatActivity {
             finish();
         }
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
@@ -144,20 +128,18 @@ public class Onboarding extends AppCompatActivity {
         //ONBOARDING DEFINITIONS
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        mNextBtn = (ImageButton) findViewById(R.id.intro_btn_next);
-        mSkipBtn = (Button) findViewById(R.id.intro_btn_skip);
-        mFinishBtn = (Button) findViewById(R.id.intro_btn_finish);
-        mDo = (Button) findViewById(R.id.intro_btn_do);
+        mNextBtn = findViewById(R.id.intro_btn_next);
+        mSkipBtn = findViewById(R.id.intro_btn_skip);
+        mFinishBtn = findViewById(R.id.intro_btn_finish);
+        mDo = findViewById(R.id.intro_btn_do);
 
-
-
-        zero = (ImageView) findViewById(R.id.intro_indicator_0);
-        one = (ImageView) findViewById(R.id.intro_indicator_1);
-        two = (ImageView) findViewById(R.id.intro_indicator_2);
+        zero = findViewById(R.id.intro_indicator_0);
+        one = findViewById(R.id.intro_indicator_1);
+        two = findViewById(R.id.intro_indicator_2);
 
         indicators = new ImageView[]{zero, one, two};
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(page);
         updateIndicators(page);
@@ -280,7 +262,7 @@ public class Onboarding extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_onboarding, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            TextView textView = rootView.findViewById(R.id.section_label);
             String[] str = new String[]{getContext().getString(R.string.section_one),getContext().getString(R.string.section_two),getContext().getString(R.string.section_three)};
             textView.setText(str[getArguments().getInt(ARG_SECTION_NUMBER)-1]);
 
@@ -302,7 +284,7 @@ public class Onboarding extends AppCompatActivity {
             switch(pos) {
                 case 0:
                     Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                    startActivityForResult(signInIntent,RC_SIGN_IN);
+                    getActivity().startActivityForResult(signInIntent,RC_SIGN_IN);
                     break;
                 case 1:
                     requestPermissions(permissions, 9999);
@@ -314,9 +296,21 @@ public class Onboarding extends AppCompatActivity {
                     break;
             }
         }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            Toast.makeText(getActivity(),"On Activity Result",Toast.LENGTH_LONG).show();
+            /*if (requestCode == RC_GET_TOKEN) {
+                // [START get_id_token]
+                // This task is always completed immediately, there is no need to attach an
+                // asynchronous listener.
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                handleSignInResult(task);
+                // [END get_id_token]
+            }*/
+        }
     }
-
-
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 

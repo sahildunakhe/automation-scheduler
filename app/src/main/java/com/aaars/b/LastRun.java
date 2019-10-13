@@ -8,7 +8,7 @@ public class LastRun {
 
     public LastRun() {
         lastrun = new ArrayList<>();
-        for(int i = 0; i < 29; i++) {
+        for(int i = 0; i < 10; i++) {
             lastrun.add("0");
         }
     }

@@ -28,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import static android.content.Context.LOCATION_SERVICE;
-import static com.aaars.b.Root.USER_ID;
 
 
 public class GeoFencing extends Fragment {
@@ -44,7 +43,8 @@ public class GeoFencing extends Fragment {
     LocationManager locationManager;
 
 
-    public GeoFencing() {}
+    public GeoFencing() {
+    }
 
 
     @Override
@@ -74,10 +74,10 @@ public class GeoFencing extends Fragment {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()) {
+                if (dataSnapshot.exists()) {
                     md = dataSnapshot.getValue(Module.class);
                     toggle.setChecked(md.enabled);
-                    if(!md.parameters.get(0).equals("0.0") && !md.parameters.get(1).equals("0.0")) {
+                    if (!md.parameters.get(0).equals("0.0") && !md.parameters.get(1).equals("0.0")) {
                         lat.setText(md.parameters.get(0));
                         lon.setText(md.parameters.get(1));
                         lon.setEnabled(false);
@@ -86,8 +86,7 @@ public class GeoFencing extends Fragment {
                         saveloc.setText("Edit Location");
                         paraphrase.setText(md.parameters.get(2) + " mili seconds");
                     }
-                }
-                else {
+                } else {
                     //INSTANTIATION OF MODULE 01
                     md.triggerid = 101;
                     md.activityid = 101;
@@ -117,9 +116,9 @@ public class GeoFencing extends Fragment {
                     String latitude = lat.getText().toString();
                     String longitude = lon.getText().toString();
                     if (!latitude.isEmpty() && !longitude.isEmpty()) {
-                        md.parameters.set(0,latitude);
-                        md.parameters.set(1,longitude);
-                        md.parameters.set(2,"0");
+                        md.parameters.set(0, latitude);
+                        md.parameters.set(1, longitude);
+                        md.parameters.set(2, "0");
                         paraphrase.setText("0 mili seconds");
                         dr.setValue(md);
                         lon.setEnabled(false);
@@ -127,8 +126,7 @@ public class GeoFencing extends Fragment {
                         getloc.setText("Get Location");
                         saveloc.setText("Edit Location");
                     }
-                }
-                else {
+                } else {
                     lon.setEnabled(true);
                     lat.setEnabled(true);
                     getloc.setText("Get Location");
@@ -150,24 +148,27 @@ public class GeoFencing extends Fragment {
                         lon.setText(Double.toString(location.getLongitude()));
                         getloc.setText("Get Location");
                         saveloc.setText("Edit Location");
-                        md.parameters.set(2,"0");
+                        md.parameters.set(2, "0");
                         paraphrase.setText("0 mili seconds");
                         dr.setValue(md);
                     }
 
                     @Override
-                    public void onStatusChanged(String s, int i, Bundle bundle) { }
+                    public void onStatusChanged(String s, int i, Bundle bundle) {
+                    }
 
                     @Override
-                    public void onProviderEnabled(String s) { }
+                    public void onProviderEnabled(String s) {
+                    }
 
                     @Override
-                    public void onProviderDisabled(String s) { }
+                    public void onProviderDisabled(String s) {
+                    }
                 };
 
                 locationManager = (LocationManager) getContext().getSystemService(LOCATION_SERVICE);
-                if(PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION))
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15,
+                if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION))
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 15,
                             50, locationListener);
 
                 Location lc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);

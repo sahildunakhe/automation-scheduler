@@ -85,7 +85,7 @@ public class SMSWiFiOff extends Fragment {
                     md.enabled = true;
                     md.parameters.add("");
                     for(int i = 0; i < 6; i++)
-                        md.parameters.add("false");
+                        md.parameters.add("true");
                     dr.setValue(md);
 
                     input.setEnabled(true);
